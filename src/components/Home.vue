@@ -40,7 +40,7 @@ onMounted(() => {
       <div class="home__content fadeInUp">
         <div class="home__image-wrapper">
           <div class="home__image-glow"></div>
-          <img src="../assets/me.png" alt="Brayan Gamboa" class="home__image">
+          <img src="../assets/me.jpg" alt="Brayan Gamboa" class="home__image">
         </div>
         
         <div class="home__text">
