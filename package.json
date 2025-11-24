@@ -1,0 +1,30 @@
+{
+  "name": "portafolio-brayan-gamboa",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Portafolio profesional de Brayan Gamboa Delgado - Desarrollador Front-end",
+  "author": "Brayan Gamboa Delgado <Brayangamboa620@gmail.com>",
+  "keywords": [
+    "portfolio",
+    "vue",
+    "front-end",
+    "web-developer"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "emailjs-com": "^3.2.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.14",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "tailwindcss": "^4.0.14",
+    "vite": "^6.2.0"
+  }
+}
