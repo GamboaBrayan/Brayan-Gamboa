@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import emailjs from 'emailjs-com';
+import { useLanguage } from '../composables/useLanguage';
+
+const { t } = useLanguage();
 
 const formData = ref({
   name: '',
@@ -16,7 +19,7 @@ const formStatus = ref({
 
 const sendEmail = async () => {
   if (!formData.value.name || !formData.value.email || !formData.value.message) {
-    formStatus.value.error = 'Por favor completa todos los campos';
+    formStatus.value.error = t('contact.form.validation');
     return;
   }
 
@@ -39,7 +42,7 @@ const sendEmail = async () => {
     formStatus.value.success = true;
     formData.value = { name: '', email: '', message: '' };
   } catch (error) {
-    formStatus.value.error = 'Hubo un error al enviar el mensaje. Por favor intenta nuevamente.';
+    formStatus.value.error = t('contact.form.error');
   } finally {
     formStatus.value.loading = false;
   }
@@ -50,8 +53,8 @@ const sendEmail = async () => {
   <div class="contact" id="contacto">
     <div class="contact__container">
       <div class="contact__header">
-        <h2 class="contact__title">Contáctame</h2>
-        <p class="contact__subtitle">¿Tienes un proyecto en mente? Hablemos</p>
+        <h2 class="contact__title">{{ t('contact.title') }}</h2>
+        <p class="contact__subtitle">{{ t('contact.subtitle') }}</p>
       </div>
 
       <div class="contact__content">
@@ -62,7 +65,7 @@ const sendEmail = async () => {
               <i class="fas fa-envelope"></i>
             </div>
             <div>
-              <h3>Email</h3>
+              <h3>{{ t('contact.email') }}</h3>
               <a href="mailto:Brayangamboa620@gmail.com" class="contact__link">
                 Brayangamboa620@gmail.com
               </a>
@@ -76,8 +79,8 @@ const sendEmail = async () => {
               <i class="fas fa-map-marker-alt"></i>
             </div>
             <div>
-              <h3>Ubicación</h3>
-              <span class="contact__text">Lima, Perú</span>
+              <h3>{{ t('contact.location') }}</h3>
+              <span class="contact__text">{{ t('contact.locationText') }}</span>
             </div>
           </div>
         </div>
@@ -86,36 +89,36 @@ const sendEmail = async () => {
         <div class="contact__form-wrapper">
           <form @submit.prevent="sendEmail" class="contact__form">
             <div class="form-group">
-              <label for="name" class="form-label">Nombre</label>
+              <label for="name" class="form-label">{{ t('contact.form.name') }}</label>
               <input
                 id="name"
                 v-model="formData.name"
                 type="text"
                 class="form-input"
-                placeholder="Brayan Gamboa"
+                :placeholder="t('contact.form.namePlaceholder')"
                 required
               />
             </div>
 
             <div class="form-group">
-              <label for="email" class="form-label">Email</label>
+              <label for="email" class="form-label">{{ t('contact.form.email') }}</label>
               <input
                 id="email"
                 v-model="formData.email"
                 type="email"
                 class="form-input"
-                placeholder="Brayan@gmail.com"
+                :placeholder="t('contact.form.emailPlaceholder')"
                 required
               />
             </div>
 
             <div class="form-group">
-              <label for="message" class="form-label">Mensaje</label>
+              <label for="message" class="form-label">{{ t('contact.form.message') }}</label>
               <textarea
                 id="message"
                 v-model="formData.message"
                 class="form-textarea"
-                placeholder="Cuéntame sobre tu idea..."
+                :placeholder="t('contact.form.messagePlaceholder')"
                 rows="5"
                 required
               ></textarea>
@@ -128,17 +131,17 @@ const sendEmail = async () => {
             >
               <span v-if="!formStatus.loading">
                 <i class="fas fa-paper-plane"></i>
-                Enviar Mensaje
+                {{ t('contact.form.submit') }}
               </span>
               <span v-else class="loading-spinner">
                 <i class="fas fa-circle-notch fa-spin"></i>
-                Enviando...
+                {{ t('contact.form.sending') }}
               </span>
             </button>
 
             <div v-if="formStatus.success" class="alert alert-success">
               <i class="fas fa-check-circle"></i>
-              ¡Mensaje enviado correctamente! Te responderé pronto.
+              {{ t('contact.form.success') }}
             </div>
 
             <div v-if="formStatus.error" class="alert alert-error">

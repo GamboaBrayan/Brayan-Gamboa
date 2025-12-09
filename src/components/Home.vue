@@ -1,17 +1,21 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { useLanguage } from '../composables/useLanguage';
+
+const { t } = useLanguage();
 
 const nombre = "Brayan Stiven   Gamboa Delgado";
-const rol = "Desarrollador Front-end";
-const descripcion = "Estudiante de Ingeniería de Software especializado en crear experiencias web modernas y funcionales con Vue.js, JavaScript y tecnologías front-end actuales.";
 
 const displayedText = ref('');
 const isTyping = ref(true);
 let typewriterTimeout;
 
-const typewriter = () => {
+const startTypewriter = () => {
+  clearTimeout(typewriterTimeout);
+  displayedText.value = '';
+  isTyping.value = true;
+  const text = t('home.role');
   let index = 0;
-  const text = rol;
   
   const type = () => {
     if (index < text.length) {
@@ -26,8 +30,12 @@ const typewriter = () => {
   type();
 };
 
+watch(() => t('home.role'), () => {
+  startTypewriter();
+});
+
 onMounted(() => {
-  setTimeout(typewriter, 500);
+  setTimeout(startTypewriter, 500);
 });
 </script>
 
@@ -44,7 +52,7 @@ onMounted(() => {
         </div>
         
         <div class="home__text">
-          <p class="home__greeting">Hola, soy</p>
+          <p class="home__greeting">{{ t('home.greeting') }}</p>
           <h1 class="home__name gradient-text">{{ nombre }}</h1>
           <div class="home__role-wrapper">
             <h2 class="home__role">
@@ -52,12 +60,12 @@ onMounted(() => {
               <span class="home__cursor" :class="{ 'blink': !isTyping }">|</span>
             </h2>
           </div>
-          <p class="home__description">{{ descripcion }}</p>
+          <p class="home__description">{{ t('home.description') }}</p>
           
           <div class="home__cta">
             <a href="#contacto" class="btn btn-primary">
               <i class="fas fa-envelope"></i>
-              <span>Contáctame</span>
+              <span>{{ t('home.contactBtn') }}</span>
             </a>
           </div>
           

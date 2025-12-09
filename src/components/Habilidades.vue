@@ -1,22 +1,17 @@
 <script setup>
+import { useLanguage } from '../composables/useLanguage';
+
+const { t } = useLanguage();
+
 const skills = {
   technical: [
-    { name: "HTML5", icon: "fab fa-html5", level: 80 },
-    { name: "CSS3", icon: "fab fa-css3-alt", level: 75 },
-    { name: "JavaScript", icon: "fab fa-js", level: 60 },
-    { name: "Vue.js", icon: "fab fa-vuejs", level: 65 },
-    { name: "Git", icon: "fab fa-git-alt", level: 70 },
-    { name: "Figma", icon: "fab fa-figma", level: 50 },
-    { name: "Responsive Design", icon: "fas fa-mobile-alt", level: 75 }
-  ],
-  soft: [
-    "Empatía",
-    "Trabajo en Equipo",
-    "Comunicación Efectiva",
-    "Aprendizaje Continuo",
-    "Escucha Activa",
-    "Adaptabilidad",
-    "Responsabilidad"
+    { name: "HTML5", icon: "fab fa-html5"},
+    { name: "CSS3", icon: "fab fa-css3-alt" },
+    { name: "JavaScript", icon: "fab fa-js" },
+    { name: "Vue.js", icon: "fab fa-vuejs" },
+    { name: "Git", icon: "fab fa-git-alt"},
+    { name: "Figma", icon: "fab fa-figma" },
+    { name: "Responsive Design", icon: "fas fa-mobile-alt"}
   ]
 };
 </script>
@@ -25,45 +20,33 @@ const skills = {
   <section class="skills" id="habilidades">
     <div class="skills__container">
       <div class="skills__header">
-        <h2 class="skills__title">Habilidades y Competencias</h2>
-        <p class="skills__subtitle">Tecnologías y soft skills que domino</p>
+        <h2 class="skills__title">{{ t('skills.title') }}</h2>
+        <p class="skills__subtitle">{{ t('skills.subtitle') }}</p>
       </div>
       
       <div class="skills__grid">
         <!-- Technical Skills -->
         <div class="skill-category">
           <div class="skill-category__header">
-            <h3 class="skill-category__title">Technical Skills</h3>
+            <h3 class="skill-category__title">{{ t('skills.technical') }}</h3>
           </div>
           
-          <div class="skills-list">
-            <div v-for="(skill, index) in skills.technical" :key="'tech-' + index" class="skill-item">
-              <div class="skill-item__header">
-                <div class="skill-item__name">
-                  <i :class="skill.icon" class="skill-item__icon"></i>
-                  <span>{{ skill.name }}</span>
-                </div>
-                <span class="skill-item__percentage">{{ skill.level }}%</span>
-              </div>
-              <div class="skill-item__bar">
-                <div 
-                  class="skill-item__progress" 
-                  :style="{ width: skill.level + '%' }"
-                  :data-level="skill.level"
-                ></div>
-              </div>
-            </div>
+          <div class="skills-pills">
+            <span v-for="(skill, index) in skills.technical" :key="'tech-' + index" class="skill-pill">
+              <i :class="skill.icon"></i>
+              {{ skill.name }}
+            </span>
           </div>
         </div>
         
         <!-- Soft Skills -->
         <div class="skill-category">
           <div class="skill-category__header">
-            <h3 class="skill-category__title">Soft Skills</h3>
+            <h3 class="skill-category__title">{{ t('skills.soft') }}</h3>
           </div>
           
           <div class="skills-pills">
-            <span v-for="(skill, index) in skills.soft" :key="'soft-' + index" class="skill-pill">
+            <span v-for="(skill, index) in t('skills.softSkills')" :key="'soft-' + index" class="skill-pill">
               {{ skill }}
             </span>
           </div>
@@ -157,82 +140,7 @@ const skills = {
   margin: 0;
 }
 
-/* Technical Skills */
-.skills-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
-}
 
-.skill-item__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-2);
-}
-
-.skill-item__name {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-base);
-  font-weight: var(--font-medium);
-  color: var(--text-primary);
-}
-
-.skill-item__icon {
-  font-size: var(--text-xl);
-  color: var(--color-primary-500);
-}
-
-.skill-item__percentage {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--color-accent-400);
-}
-
-.skill-item__bar {
-  width: 100%;
-  height: 8px;
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  position: relative;
-}
-
-.skill-item__progress {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-primary-600), var(--color-accent-500));
-  border-radius: var(--radius-full);
-  transition: width 1s ease-out;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-  position: relative;
-}
-
-.skill-item__progress::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
 
 /* Soft Skills */
 .skills-pills {
@@ -242,6 +150,9 @@ const skills = {
 }
 
 .skill-pill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   padding: var(--space-3) var(--space-5);
   background: rgba(59, 130, 246, 0.1);
   border: 1px solid rgba(59, 130, 246, 0.3);
@@ -288,9 +199,7 @@ const skills = {
     padding: var(--space-5);
   }
   
-  .skill-item__name {
-    font-size: var(--text-sm);
-  }
+
   
   .skill-pill {
     padding: var(--space-2) var(--space-4);

@@ -1,53 +1,64 @@
 <script setup>
-const proyectos = [
+import { computed } from 'vue';
+import { useLanguage } from '../composables/useLanguage';
+
+const { t } = useLanguage();
+
+const staticProjectData = [
   {
-    nombre: "SkillLedger",
-    descripcion: "Plataforma web que digitaliza el reconocimiento laboral usando blockchain y gamificación para motivar y retener talento.",
+    posts_id: 0,
     imagen: "/images/skillLedger.png",
     enlace: "https://skillledger.netlify.app/login",
     github: "https://github.com/GamboaBrayan",
-    tecnologias: ["Vue.js", "Blockchain", "Gamificación", "Web3"]
   },
   {
-    nombre: "Vitality",
-    descripcion: "Landing Page de un Start up de la universidad sobre recetas saludables.",
+    posts_id: 1,
     imagen: "/images/vitality.png",
     enlace: "https://vitality-landing.netlify.app/",
     github: "https://github.com/GamboaBrayan",
-    tecnologias: ["HTML", "CSS", "JavaScript", "Responsive"]
   },
   {
-    nombre: "InfoNow",
-    descripcion: "Aplicación web para consultar las últimas noticias según tus intereses.",
+    posts_id: 2,
     imagen: "/images/Api_news.png",
     enlace: "https://apiinfonow.netlify.app/",
     github: "https://github.com/GamboaBrayan",
-    tecnologias: ["Vue.js", "API REST", "CSS3"]
   },
 ];
+
+const projects = computed(() => {
+  const translatedItems = t('projects.items');
+  // Return empty array if translation isn't an array yet (safety check)
+  if (!Array.isArray(translatedItems)) return [];
+  
+  return translatedItems.map((item, index) => ({
+    ...item,
+    // Merge with static data if available for this index
+    ...(staticProjectData[index] || {})
+  }));
+});
 </script>
 
 <template>
   <div class="proyectos" id="Proyectos">
     <div class="proyectos__container">
       <div class="proyectos__header">
-        <h2 class="proyectos__title">Proyectos Destacados</h2>
-        <p class="proyectos__subtitle">Algunos de los trabajos que he realizado</p>
+        <h2 class="proyectos__title">{{ t('projects.title') }}</h2>
+        <p class="proyectos__subtitle">{{ t('projects.subtitle') }}</p>
       </div>
       
       <div class="proyectos__grid">
-        <div v-for="(proyecto, index) in proyectos" :key="index" class="proyecto-card">
+        <div v-for="(proyecto, index) in projects" :key="index" class="proyecto-card">
           <div class="proyecto-card__image-wrapper">
             <img v-if="proyecto.imagen" :src="proyecto.imagen" :alt="proyecto.nombre" class="proyecto-card__image" />
             <div class="proyecto-card__overlay">
               <div class="proyecto-card__links">
                 <a v-if="proyecto.enlace" :href="proyecto.enlace" target="_blank" rel="noopener noreferrer" class="proyecto-card__link">
                   <i class="fas fa-external-link-alt"></i>
-                  <span>Demo</span>
+                  <span>{{ t('projects.demo') }}</span>
                 </a>
                 <a v-if="proyecto.github" :href="proyecto.github" target="_blank" rel="noopener noreferrer" class="proyecto-card__link">
                   <i class="fab fa-github"></i>
-                  <span>Código</span>
+                  <span>{{ t('projects.code') }}</span>
                 </a>
               </div>
             </div>

@@ -22,8 +22,13 @@
             :class="{ 'active': activeSection === link.id }"
             @click="closeMobileMenu"
           >
-            {{ link.label }}
+            {{ t(`navbar.${link.translationKey}`) }}
           </a>
+        </li>
+        <li>
+          <button @click="toggleLanguage" class="navbar__lang-btn" :title="currentLanguage === 'es' ? 'Switch to English' : 'Cambiar a Español'">
+            {{ currentLanguage === 'es' ? 'EN' : 'ES' }}
+          </button>
         </li>
         <li>
           <a 
@@ -33,7 +38,7 @@
             title="Descargar CV"
           >
             <i class="fas fa-download"></i>
-            <span>CV</span>
+            <span>{{ t('navbar.cv') }}</span>
           </a>
         </li>
       </ul>
@@ -42,17 +47,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useLanguage } from '../composables/useLanguage';
+
+const { currentLanguage, toggleLanguage, t } = useLanguage();
 
 const activeSection = ref('aboutme');
 const isScrolled = ref(false);
 const isMobileMenuOpen = ref(false);
 
 const navLinks = [
-  { id: 'aboutme', label: 'Sobre mí' },
-  { id: 'Proyectos', label: 'Proyectos' },
-  { id: 'habilidades', label: 'Habilidades' },
-  { id: 'contacto', label: 'Contacto' }
+  { id: 'aboutme', translationKey: 'about' },
+  { id: 'Proyectos', translationKey: 'projects' },
+  { id: 'habilidades', translationKey: 'skills' },
+  { id: 'contacto', translationKey: 'contact' }
 ];
 
 // Scroll spy functionality
@@ -181,6 +189,23 @@ onUnmounted(() => {
 
 .navbar__link.active::after {
   transform: translateX(-50%) scaleX(1);
+}
+
+.navbar__lang-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: var(--font-semibold);
+  transition: all var(--transition-base);
+  margin-right: var(--space-2);
+}
+
+.navbar__lang-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-primary-500);
 }
 
 .navbar__cta {
