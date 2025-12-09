@@ -60,12 +60,7 @@ const quickLinks = [
                 Brayangamboa620@gmail.com
               </a>
             </li>
-            <li>
-              <a href="https://wa.me/+51934504275" target="_blank" rel="noopener noreferrer" class="footer__link">
-                <i class="fab fa-whatsapp"></i>
-                +51 934 504 275
-              </a>
-            </li>
+
             <li class="footer__text">
               <i class="fas fa-map-marker-alt"></i>
               lima, Perú

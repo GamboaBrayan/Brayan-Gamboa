@@ -1,13 +1,13 @@
 <script setup>
 const skills = {
   technical: [
-    { name: "HTML5", icon: "fab fa-html5", level: 90 },
-    { name: "CSS3", icon: "fab fa-css3-alt", level: 85 },
-    { name: "JavaScript", icon: "fab fa-js", level: 80 },
-    { name: "Vue.js", icon: "fab fa-vuejs", level: 75 },
+    { name: "HTML5", icon: "fab fa-html5", level: 80 },
+    { name: "CSS3", icon: "fab fa-css3-alt", level: 75 },
+    { name: "JavaScript", icon: "fab fa-js", level: 60 },
+    { name: "Vue.js", icon: "fab fa-vuejs", level: 65 },
     { name: "Git", icon: "fab fa-git-alt", level: 70 },
-    { name: "Figma", icon: "fab fa-figma", level: 65 },
-    { name: "Responsive Design", icon: "fas fa-mobile-alt", level: 85 }
+    { name: "Figma", icon: "fab fa-figma", level: 50 },
+    { name: "Responsive Design", icon: "fas fa-mobile-alt", level: 75 }
   ],
   soft: [
     "Empatía",
@@ -33,7 +33,6 @@ const skills = {
         <!-- Technical Skills -->
         <div class="skill-category">
           <div class="skill-category__header">
-            <span class="skill-category__icon">💻</span>
             <h3 class="skill-category__title">Technical Skills</h3>
           </div>
           
@@ -60,7 +59,6 @@ const skills = {
         <!-- Soft Skills -->
         <div class="skill-category">
           <div class="skill-category__header">
-            <span class="skill-category__icon">🧠</span>
             <h3 class="skill-category__title">Soft Skills</h3>
           </div>
           

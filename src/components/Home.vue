@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const nombre = "Brayan Gamboa Delgado";
+const nombre = "Brayan Stiven   Gamboa Delgado";
 const rol = "Desarrollador Front-end";
 const descripcion = "Estudiante de Ingeniería de Software especializado en crear experiencias web modernas y funcionales con Vue.js, JavaScript y tecnologías front-end actuales.";
 

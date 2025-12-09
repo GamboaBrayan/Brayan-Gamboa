@@ -1,25 +1,19 @@
 # Portafolio Personal - Brayan Gamboa Delgado
 
-Portafolio profesional desarrollado con Vue 3 y Vite, diseñado para mostrar mis proyectos, habilidades y experiencia como desarrollador Front-end.
+Portafolio desarrollado con Vue 3 y Vite, diseñado para mostrar mis proyectos, habilidades y experiencia como desarrollador Front-end.
 
-![Portfolio Preview](./public/images/preview.png)
+## Características
 
-## 🚀 Demo en Vivo
+- Diseño moderno y profesional
+- Totalmente responsive (Mobile, Tablet, Desktop)
+- Optimizado para rendimiento
+- Animaciones suaves y atractivas
+- Sistema de diseño con variables CSS
+- Formulario de contacto funcional con EmailJS
+- Optimizado para SEO
+- Accesible (WCAG 2.1)
 
-[Ver Portafolio](https://brayangamboa.netlify.app) _(Actualizar con tu URL de deploy)_
-
-## ✨ Características
-
-- 🎨 Diseño moderno y profesional
-- 📱 Totalmente responsive (Mobile, Tablet, Desktop)
-- ⚡ Optimizado para rendimiento
-- 🎭 Animaciones suaves y atractivas
-- 🌙 Sistema de diseño con variables CSS
-- 💌 Formulario de contacto funcional con EmailJS
-- 🔍 Optimizado para SEO
-- ♿ Accesible (WCAG 2.1)
-
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Framework:** Vue 3 (Composition API)
 - **Build Tool:** Vite
@@ -29,7 +23,7 @@ Portafolio profesional desarrollado con Vue 3 y Vite, diseñado para mostrar mis
 - **Formularios:** EmailJS
 - **Deploy:** Netlify / Vercel
 
-## 📦 Instalación y Uso
+## Instalación y Uso
 
 ### Prerrequisitos
 
@@ -68,7 +62,7 @@ npm run preview
 npm run lint
 ```
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 portafolio/
@@ -96,7 +90,7 @@ portafolio/
 └── vite.config.js
 ```
 
-## 🎨 Sistema de Diseño
+## Sistema de Diseño
 
 El portafolio utiliza un sistema de diseño basado en CSS variables para mantener consistencia:
 
@@ -106,7 +100,7 @@ El portafolio utiliza un sistema de diseño basado en CSS variables para mantene
 - **Sombras:** Elevaciones predefinidas
 - **Transiciones:** Timings estandarizados
 
-## 📧 Configurar EmailJS
+## Configurar EmailJS
 
 Para que el formulario de contacto funcione:
 
@@ -124,7 +118,7 @@ await emailjs.send(
 );
 ```
 
-## 🚀 Deploy
+## Deploy
 
 ### Netlify
 
@@ -144,21 +138,12 @@ npm i -g vercel
 vercel
 ```
 
-## 📈 Optimizaciones
 
-- ✅ Lazy loading de imágenes
-- ✅ Code splitting
-- ✅ Compresión de assets
-- ✅ Meta tags para SEO
-- ✅ Open Graph para redes sociales
-- ✅ Smooth scroll
-- ✅ Lighthouse score > 90
-
-## 📝 Licencia
+## Licencia
 
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
-## 👤 Autor
+## Autor
 
 **Brayan Gamboa Delgado**
 

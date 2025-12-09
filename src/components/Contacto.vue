@@ -69,22 +69,7 @@ const sendEmail = async () => {
             </div>
           </div>
 
-          <div class="contact__info-item">
-            <div class="contact__icon-wrapper">
-              <i class="fab fa-whatsapp"></i>
-            </div>
-            <div>
-              <h3>WhatsApp</h3>
-              <a 
-                href="https://wa.me/+51934504275?text=Hola,%20estoy%20interesado%20en%20contactarte." 
-                target="_blank"
-                rel="noopener noreferrer" 
-                class="contact__link"
-              >
-                +51 934 504 275
-              </a>
-            </div>
-          </div>
+
 
           <div class="contact__info-item">
             <div class="contact__icon-wrapper">
@@ -107,7 +92,7 @@ const sendEmail = async () => {
                 v-model="formData.name"
                 type="text"
                 class="form-input"
-                placeholder="Tu nombre"
+                placeholder="Brayan Gamboa"
                 required
               />
             </div>
@@ -119,7 +104,7 @@ const sendEmail = async () => {
                 v-model="formData.email"
                 type="email"
                 class="form-input"
-                placeholder="tu@email.com"
+                placeholder="Brayan@gmail.com"
                 required
               />
             </div>
@@ -130,7 +115,7 @@ const sendEmail = async () => {
                 id="message"
                 v-model="formData.message"
                 class="form-textarea"
-                placeholder="Cuéntame sobre tu proyecto..."
+                placeholder="Cuéntame sobre tu idea..."
                 rows="5"
                 required
               ></textarea>
