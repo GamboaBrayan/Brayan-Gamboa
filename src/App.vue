@@ -1,7 +1,8 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
-import Home from "./components/Home.vue";
+import Home from './components/Home.vue';
 import Proyectos from './components/Proyectos.vue';
+import Experiencia from './components/Experiencia.vue';
 import Habilidades from './components/Habilidades.vue';
 import Contacto from './components/Contacto.vue';
 import Footer from './components/Footer.vue';
@@ -13,6 +14,7 @@ import ScrollToTop from './components/ScrollToTop.vue';
     <Navbar />
     <Home />
     <Proyectos />
+    <Experiencia />
     <Habilidades />
     <Contacto />
     <Footer />

@@ -3,9 +3,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useLanguage } from '../composables/useLanguage';
 
 const { t } = useLanguage();
-
-const nombre = "Brayan Stiven   Gamboa Delgado";
-
+const nombre = "Brayan Stiven Gamboa Delgado";
 const displayedText = ref('');
 const isTyping = ref(true);
 let typewriterTimeout;
@@ -16,7 +14,6 @@ const startTypewriter = () => {
   isTyping.value = true;
   const text = t('home.role');
   let index = 0;
-  
   const type = () => {
     if (index < text.length) {
       displayedText.value += text.charAt(index);
@@ -26,49 +23,47 @@ const startTypewriter = () => {
       isTyping.value = false;
     }
   };
-  
   type();
 };
 
-watch(() => t('home.role'), () => {
-  startTypewriter();
-});
-
-onMounted(() => {
-  setTimeout(startTypewriter, 500);
-});
+watch(() => t('home.role'), () => startTypewriter());
+onMounted(() => setTimeout(startTypewriter, 500));
 </script>
 
 <template>
   <div class="home" id="aboutme">
     <video src="../assets/background.mp4" autoplay muted loop class="home__video"></video>
     <div class="home__overlay"></div>
-    
+
     <div class="home__container">
-      <div class="home__content fadeInUp">
+      <div class="home__content">
+        <!-- Imagen -->
         <div class="home__image-wrapper">
-          <div class="home__image-glow"></div>
           <img src="../assets/me.jpg" alt="Brayan Gamboa" class="home__image">
         </div>
-        
+
+        <!-- Texto -->
         <div class="home__text">
           <p class="home__greeting">{{ t('home.greeting') }}</p>
-          <h1 class="home__name gradient-text">{{ nombre }}</h1>
+          <h1 class="home__name">{{ nombre }}</h1>
           <div class="home__role-wrapper">
             <h2 class="home__role">
-              {{ displayedText }}
-              <span class="home__cursor" :class="{ 'blink': !isTyping }">|</span>
+              {{ displayedText }}<span class="home__cursor" :class="{ blink: !isTyping }">|</span>
             </h2>
           </div>
           <p class="home__description">{{ t('home.description') }}</p>
-          
+
           <div class="home__cta">
             <a href="#contacto" class="btn btn-primary">
               <i class="fas fa-envelope"></i>
               <span>{{ t('home.contactBtn') }}</span>
             </a>
+            <a href="#Proyectos" class="btn btn-secondary">
+              <i class="fas fa-code"></i>
+              <span>{{ t('home.projectsBtn') }}</span>
+            </a>
           </div>
-          
+
           <div class="home__social">
             <a href="https://github.com/GamboaBrayan" target="_blank" rel="noopener noreferrer" class="home__social-link" aria-label="GitHub">
               <i class="fab fa-github"></i>
@@ -87,6 +82,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* ========= BASE MOBILE ========= */
 .home {
   position: relative;
   min-height: 100vh;
@@ -111,257 +107,179 @@ onMounted(() => {
 
 .home__overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: linear-gradient(
-    135deg,
-    rgba(17, 24, 39, 0.85) 0%,
-    rgba(31, 41, 55, 0.75) 50%,
-    rgba(17, 24, 39, 0.9) 100%
+    160deg,
+    rgba(17, 24, 39, 0.92) 0%,
+    rgba(31, 41, 55, 0.82) 50%,
+    rgba(17, 24, 39, 0.94) 100%
   );
   z-index: -1;
 }
 
 .home__container {
-  max-width: 1280px;
   width: 100%;
-  padding: var(--space-6);
+  padding: var(--space-4);
   position: relative;
   z-index: 1;
 }
 
+/* Mobile: vertical stack, image on top */
 .home__content {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: var(--space-12);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: var(--space-8);
   animation: fadeInUp 0.8s ease-out;
 }
 
 .home__image-wrapper {
-  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.home__image-glow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-    circle,
-    rgba(59, 130, 246, 0.3) 0%,
-    transparent 70%
-  );
-  filter: blur(40px);
-  animation: pulse 3s ease-in-out infinite;
 }
 
 .home__image {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  aspect-ratio: 1;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 80px rgba(59, 130, 246, 0.2);
   object-fit: cover;
+  border: 3px solid rgba(124, 58, 237, 0.35);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
   transition: transform var(--transition-base);
 }
 
 .home__image:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .home__text {
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .home__greeting {
-  font-size: var(--text-lg);
-  color: var(--color-accent-400);
+  font-size: var(--text-base);
+  color: var(--color-primary-300);
   font-weight: var(--font-medium);
   margin-bottom: var(--space-2);
-  opacity: 0.9;
 }
 
 .home__name {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(1.8rem, 6vw, 3.5rem);
   font-weight: var(--font-extrabold);
-  margin-bottom: var(--space-4);
+  color: #ffffff;
+  margin-bottom: var(--space-3);
   line-height: 1.1;
 }
 
 .home__role-wrapper {
-  min-height: 60px;
-  margin-bottom: var(--space-4);
+  min-height: 44px;
+  margin-bottom: var(--space-3);
 }
 
 .home__role {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.1rem, 4vw, 2rem);
   font-weight: var(--font-semibold);
   color: var(--text-secondary);
   display: inline-block;
 }
 
 .home__cursor {
-  color: var(--color-primary-500);
+  color: var(--color-primary-400);
   font-weight: var(--font-bold);
 }
-
-.home__cursor.blink {
-  animation: blink 1s step-end infinite;
-}
+.home__cursor.blink { animation: blink 1s step-end infinite; }
 
 @keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0;
-  }
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 .home__description {
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   line-height: var(--leading-relaxed);
   color: var(--text-secondary);
-  margin-bottom: var(--space-8);
-  max-width: 600px;
+  margin-bottom: var(--space-6);
+  max-width: 520px;
 }
 
 .home__cta {
   display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-8);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: var(--space-6);
 }
+
+.home__cta .btn { width: 100%; justify-content: center; }
 
 .home__social {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-3);
+  justify-content: center;
 }
 
 .home__social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  font-size: var(--text-xl);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--color-neutral-300);
+  font-size: var(--text-lg);
   transition: all var(--transition-base);
-  backdrop-filter: blur(10px);
 }
 
 .home__social-link:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.home__social-link:nth-child(1):hover {
-  background: #333;
-  border-color: #333;
-}
-
-.home__social-link:nth-child(2):hover {
-  background: #0077b5;
-  border-color: #0077b5;
-}
-
-.home__social-link:nth-child(3):hover {
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  border-color: transparent;
-}
-
-.home__scroll-indicator {
-  position: absolute;
-  bottom: var(--space-8);
-  left: 50%;
-  transform: translateX(-50%);
+  transform: translateY(-3px);
+  background: rgba(124, 58, 237, 0.2);
+  border-color: var(--color-primary-600);
   color: white;
-  font-size: var(--text-2xl);
-  opacity: 0.7;
-  transition: all var(--transition-base);
-  cursor: pointer;
 }
 
-.home__scroll-indicator:hover {
-  opacity: 1;
-  color: var(--color-primary-400);
+/* ========= TABLET: 640px ========= */
+@media (min-width: 640px) {
+  .home__image { width: 260px; height: 260px; }
+
+  .home__cta {
+    flex-direction: row;
+    width: auto;
+    max-width: none;
+  }
+  .home__cta .btn { width: auto; }
+
+  .home__description { font-size: var(--text-lg); }
+  .home__greeting    { font-size: var(--text-lg); }
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+/* ========= DESKTOP: 1024px ========= */
+@media (min-width: 1024px) {
+  .home__container { max-width: 1280px; margin: 0 auto; padding: var(--space-6); }
+
+  /* Switch to side-by-side layout */
   .home__content {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: var(--space-8);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    text-align: left;
+    gap: var(--space-12);
   }
-  
-  .home__image-wrapper {
-    order: -1;
-  }
-  
-  .home__image {
-    max-width: 300px;
-  }
-  
-  .home__text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .home__cta {
-    justify-content: center;
-  }
-  
-  .home__social {
-    justify-content: center;
-  }
-}
 
-@media (max-width: 390px) {
-  .home__container {
-    padding: var(--space-4);
-  }
-  
-  .home__image {
-    max-width: 250px;
-  }
-  
-  .home__greeting {
-    font-size: var(--text-base);
-  }
-  
-  .home__description {
-    font-size: var(--text-base);
-  }
-  
-  .home__cta {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .btn {
-    width: 100%;
-  }
-  
-  .home__social-link {
-    width: 44px;
-    height: 44px;
-    font-size: var(--text-lg);
-  }
+  .home__image-wrapper { order: 0; }
+
+  .home__image { width: 360px; height: 360px; }
+
+  .home__text { align-items: flex-start; }
+
+  .home__cta { justify-content: flex-start; }
+
+  .home__social { justify-content: flex-start; }
 }
 </style>

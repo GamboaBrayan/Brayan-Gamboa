@@ -5,34 +5,17 @@ import { useLanguage } from '../composables/useLanguage';
 const { t } = useLanguage();
 
 const staticProjectData = [
-  {
-    posts_id: 0,
-    imagen: "/images/skillLedger.png",
-    enlace: "https://skillledger.netlify.app/login",
-    github: "https://github.com/GamboaBrayan",
-  },
-  {
-    posts_id: 1,
-    imagen: "/images/vitality.png",
-    enlace: "https://vitality-landing.netlify.app/",
-    github: "https://github.com/GamboaBrayan",
-  },
-  {
-    posts_id: 2,
-    imagen: "/images/Api_news.png",
-    enlace: "https://apiinfonow.netlify.app/",
-    github: "https://github.com/GamboaBrayan",
-  },
+  { posts_id: 0, imagen: "/images/skillLedger.png", github: "https://github.com/TalentChain-UPC/Frontend", demo: null },
+  { posts_id: 1, imagen: "/images/vitality.png",    github: "https://github.com/GamboaBrayan/Vitality-Landing", demo: null },
+  { posts_id: 2, imagen: "/images/Api_news.png",    github: "https://github.com/GamboaBrayan/ApiNews",         demo: "https://apiinfonow.netlify.app" },
+  { posts_id: 3, imagen: "/images/rossandflor.png",    github: "https://github.com/ROSS-FLOR/ROSS-FLOR_Frontend",         demo: null  },
 ];
 
 const projects = computed(() => {
   const translatedItems = t('projects.items');
-  // Return empty array if translation isn't an array yet (safety check)
   if (!Array.isArray(translatedItems)) return [];
-  
   return translatedItems.map((item, index) => ({
     ...item,
-    // Merge with static data if available for this index
     ...(staticProjectData[index] || {})
   }));
 });
@@ -42,37 +25,51 @@ const projects = computed(() => {
   <div class="proyectos" id="Proyectos">
     <div class="proyectos__container">
       <div class="proyectos__header">
-        <h2 class="proyectos__title">{{ t('projects.title') }}</h2>
+        <h2 class="section-title">{{ t('projects.title') }}</h2>
         <p class="proyectos__subtitle">{{ t('projects.subtitle') }}</p>
       </div>
-      
+
       <div class="proyectos__grid">
         <div v-for="(proyecto, index) in projects" :key="index" class="proyecto-card">
           <div class="proyecto-card__image-wrapper">
             <img v-if="proyecto.imagen" :src="proyecto.imagen" :alt="proyecto.nombre" class="proyecto-card__image" />
-            <div class="proyecto-card__overlay">
-              <div class="proyecto-card__links">
-                <a v-if="proyecto.enlace" :href="proyecto.enlace" target="_blank" rel="noopener noreferrer" class="proyecto-card__link">
-                  <i class="fas fa-external-link-alt"></i>
-                  <span>{{ t('projects.demo') }}</span>
-                </a>
-                <a v-if="proyecto.github" :href="proyecto.github" target="_blank" rel="noopener noreferrer" class="proyecto-card__link">
-                  <i class="fab fa-github"></i>
-                  <span>{{ t('projects.code') }}</span>
-                </a>
-              </div>
+            <!-- Hover overlay: GitHub + Demo -->
+            <div v-if="proyecto.github || proyecto.demo" class="proyecto-card__overlay">
+              <a
+                v-if="proyecto.github"
+                :href="proyecto.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="proyecto-card__overlay-btn"
+                :aria-label="'GitHub: ' + proyecto.nombre"
+                @click.stop
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                v-if="proyecto.demo"
+                :href="proyecto.demo"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="proyecto-card__overlay-btn"
+                :aria-label="'Ver sitio: ' + proyecto.nombre"
+                @click.stop
+              >
+                <i class="fas fa-external-link-alt"></i>
+              </a>
             </div>
           </div>
-          
+
           <div class="proyecto-card__content">
             <h3 class="proyecto-card__title">{{ proyecto.nombre }}</h3>
             <p class="proyecto-card__description">{{ proyecto.descripcion }}</p>
-            
+
             <div class="proyecto-card__technologies">
               <span v-for="(tech, techIndex) in proyecto.tecnologias" :key="techIndex" class="tech-tag">
                 {{ tech }}
               </span>
             </div>
+
           </div>
         </div>
       </div>
@@ -81,74 +78,57 @@ const projects = computed(() => {
 </template>
 
 <style scoped>
+/* ========= BASE MOBILE ========= */
 .proyectos {
-  padding: var(--space-20) 0;
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  padding: var(--space-16) 0;
+  background: var(--bg-primary);
 }
 
 .proyectos__container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 var(--space-4);
 }
 
 .proyectos__header {
   text-align: center;
-  margin-bottom: var(--space-16);
-}
-
-.proyectos__title {
-  font-size: var(--text-4xl);
-  font-weight: var(--font-extrabold);
-  color: var(--text-primary);
-  margin-bottom: var(--space-3);
-  position: relative;
-  display: inline-block;
-}
-
-.proyectos__title::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--color-primary-500), var(--color-accent-500));
-  border-radius: var(--radius-full);
+  margin-bottom: var(--space-10);
 }
 
 .proyectos__subtitle {
-  color: var(--text-secondary);
-  font-size: var(--text-lg);
-  margin-top: var(--space-6);
+  color: var(--text-tertiary);
+  font-size: var(--text-base);
+  margin-top: var(--space-5);
 }
 
+/* Single column on mobile */
 .proyectos__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--space-8);
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
 }
 
 .proyecto-card {
   background: var(--bg-secondary);
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   border: 1px solid var(--border-primary);
   transition: all var(--transition-base);
   box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
 }
 
 .proyecto-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-2xl);
-  border-color: var(--color-primary-500);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-primary-700);
 }
 
 .proyecto-card__image-wrapper {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 190px;
   overflow: hidden;
   background: var(--bg-tertiary);
 }
@@ -161,119 +141,143 @@ const projects = computed(() => {
 }
 
 .proyecto-card:hover .proyecto-card__image {
-  transform: scale(1.1);
+  transform: scale(1.04);
 }
 
+/* Hover overlay with two icon buttons */
 .proyecto-card__overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(17, 24, 39, 0.9);
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: var(--space-4);
+  background: rgba(17, 24, 39, 0.6);
   opacity: 0;
   transition: opacity var(--transition-base);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .proyecto-card:hover .proyecto-card__overlay {
   opacity: 1;
 }
 
-.proyecto-card__links {
+.proyecto-card__overlay-btn {
   display: flex;
-  gap: var(--space-4);
-}
-
-.proyecto-card__link {
-  display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-5);
-  background: linear-gradient(135deg, var(--color-primary-600), var(--color-accent-500));
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: white;
+  font-size: 1.4rem;
   text-decoration: none;
-  border-radius: var(--radius-lg);
-  font-weight: var(--font-semibold);
-  transition: all var(--transition-base);
-  box-shadow: var(--shadow-md);
+  transition: background var(--transition-base), transform var(--transition-base);
+  backdrop-filter: blur(4px);
 }
 
-.proyecto-card__link:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+.proyecto-card__overlay-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(1.1);
+  color: white;
 }
 
 .proyecto-card__content {
-  padding: var(--space-6);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .proyecto-card__title {
-  font-size: var(--text-2xl);
+  font-size: var(--text-lg);
   font-weight: var(--font-bold);
   color: var(--text-primary);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .proyecto-card__description {
   color: var(--text-secondary);
+  font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
+  flex: 1;
 }
 
 .proyecto-card__technologies {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
 .tech-tag {
   padding: var(--space-1) var(--space-3);
-  background: rgba(147, 51, 234, 0.1);
-  border: 1px solid rgba(147, 51, 234, 0.3);
-  color: var(--color-primary-400);
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  color: var(--color-primary-300);
   border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+}
+
+.proyecto-card__footer {
+  border-top: 1px solid var(--border-primary);
+  padding-top: var(--space-4);
+}
+
+.proyecto-card__github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  border: 1.5px solid var(--border-secondary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-lg);
   font-size: var(--text-sm);
- font-weight: var(--font-medium);
+  font-weight: var(--font-medium);
   transition: all var(--transition-base);
+  text-decoration: none;
 }
 
-.tech-tag:hover {
-  background: rgba(147, 51, 234, 0.2);
-  border-color: var(--color-primary-500);
-  transform: translateY(-2px);
+.proyecto-card__github-btn:hover {
+  border-color: var(--color-primary-600);
+  color: var(--color-primary-300);
+  background: rgba(124, 58, 237, 0.08);
 }
 
-@media (max-width: 768px) {
-  .proyectos {
-    padding: var(--space-16) 0;
-  }
-  
+/* ========= TABLET: 640px ========= */
+@media (min-width: 640px) {
   .proyectos__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-6);
   }
-  
-  .proyectos__header {
-    margin-bottom: var(--space-12);
-  }
+  .proyecto-card__image-wrapper { height: 200px; }
 }
 
-@media (max-width: 390px) {
-  .proyectos__container {
-    padding: 0 var(--space-4);
+/* ========= DESKTOP: 1024px ========= */
+@media (min-width: 1024px) {
+  .proyectos { padding: var(--space-20) 0; }
+
+  .proyectos__container { padding: 0 var(--space-6); }
+
+  .proyectos__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
   }
-  
-  .proyecto-card__links {
-    flex-direction: column;
-    width: 80%;
-  }
-  
-  .proyecto-card__link {
-    width: 100%;
-    justify-content: center;
-  }
+
+  .proyectos__header { margin-bottom: var(--space-14); }
+
+  .proyectos__subtitle { font-size: var(--text-lg); }
+
+  .proyecto-card__image-wrapper { height: 210px; }
+
+  .proyecto-card__content { padding: var(--space-6); }
+
+  .proyecto-card__title { font-size: var(--text-xl); }
 }
 </style>
