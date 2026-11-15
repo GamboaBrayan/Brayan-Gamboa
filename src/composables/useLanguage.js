@@ -78,10 +78,18 @@ const translations = {
                 {
                     role: "Desarrollador Web",
                     company: "IFurniture",
-                    period: "FEB 2026 - Actualidad",
-                    current: true,
+                    period: "FEB 2026 - APR 2026",
+                    current: false,
                     description: "Desarrollo y mantenimiento de la plataforma oficial como del ecommerce de la empresa. Implementando mejoras continuas para mejorar la experiencia del usuario.",
                     technologies: ["PHP", "Laravel", "JavaScript", "CSS3", "GitLab", "Git"]
+                },
+                {
+                    role: "QA Trainee",
+                    company: "ManduHR",
+                    period: "MAY 2026 - Actualidad",
+                    current: false,
+                    description: "Ejecución de pruebas funcionales y de regresión en la plataforma web, diseño de casos de prueba y reporte detallado de incidencias para asegurar la calidad del producto.",
+                    technologies: ["QA Testing", "Pruebas Funcionales", "Jira", "Postman", "Git"]
                 }
             ],
             education: [
@@ -190,10 +198,18 @@ const translations = {
                 {
                     role: "Web Developer",
                     company: "IFurniture",
-                    period: "FEB 2026 - Present",
-                    current: true,
+                    period: "FEB 2026 - APR 2026",
+                    current: false,
                     description: "Development and maintenance of the company's official platform and e-commerce site. Implementing continuous improvements to enhance the user experience.",
                     technologies: ["PHP", "Laravel", "JavaScript", "CSS3", "GitLab", "Git"]
+                },
+                {
+                    role: "QA Trainee",
+                    company: "ManduHR",
+                    period: "MAY 2026 - Present",
+                    current: false,
+                    description: "Execution of functional and regression testing on the web platform, test case design, and detailed bug reporting to ensure product quality.",
+                    technologies: ["QA Testing", "Functional Testing", "Jira", "Postman", "Git"]
                 }
             ],
             education: [

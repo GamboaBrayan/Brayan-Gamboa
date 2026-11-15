@@ -1,9 +1,36 @@
 <script setup>
-import { ref } from 'vue';
-import emailjs from 'emailjs-com';
+import { ref, onMounted, onUnmounted } from 'vue';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import emailjs from '@emailjs/browser';
 import { useLanguage } from '../composables/useLanguage';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const { t } = useLanguage();
+let gsapCtx;
+
+onMounted(() => {
+  gsapCtx = gsap.context(() => {
+    gsap.from('.contact__header, .contact__info, .contact__form-wrapper', {
+      y: 28,
+      opacity: 0,
+      duration: 0.65,
+      stagger: 0.12,
+      ease: 'power3.out',
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: '.contact',
+        start: 'top 90%',
+        once: true,
+      },
+    });
+  });
+});
+
+onUnmounted(() => {
+  if (gsapCtx) gsapCtx.revert();
+});
 
 const formData = ref({ name: '', email: '', message: '' });
 const formStatus = ref({ loading: false, success: false, error: '' });

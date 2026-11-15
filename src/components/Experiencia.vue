@@ -1,7 +1,49 @@
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '../composables/useLanguage';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const { t } = useLanguage();
+let gsapCtx;
+
+onMounted(() => {
+  gsapCtx = gsap.context(() => {
+    gsap.from('.experience__header', {
+      y: 28,
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: '.experience__header',
+        start: 'top 90%',
+        once: true,
+      },
+    });
+
+    gsap.utils.toArray('.timeline__item').forEach((item) => {
+      gsap.from(item, {
+        x: -24,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 92%',
+          once: true,
+        },
+      });
+    });
+  });
+});
+
+onUnmounted(() => {
+  if (gsapCtx) gsapCtx.revert();
+});
 </script>
 
 <template>
@@ -218,12 +260,12 @@ const { t } = useLanguage();
   display: inline-flex;
   align-items: center;
   padding: 2px var(--space-2);
-  background: rgba(124, 58, 237, 0.12);
-  border: 1px solid rgba(124, 58, 237, 0.3);
-  color: var(--color-primary-300);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-200);
+  color: var(--color-primary-700);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-semibold);
 }
 
 .timeline__role {
@@ -238,7 +280,7 @@ const { t } = useLanguage();
   align-items: center;
   gap: var(--space-2);
   font-size: var(--text-sm);
-  color: var(--color-primary-400);
+  color: var(--color-primary-600);
   font-weight: var(--font-medium);
   margin-bottom: var(--space-3);
 }
@@ -258,9 +300,9 @@ const { t } = useLanguage();
 
 .tech-tag {
   padding: 2px var(--space-2);
-  background: rgba(124, 58, 237, 0.08);
-  border: 1px solid rgba(124, 58, 237, 0.25);
-  color: var(--color-primary-300);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-200);
+  color: var(--color-primary-700);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: var(--font-medium);

@@ -98,12 +98,12 @@ onUnmounted(() => { window.removeEventListener('scroll', handleScroll); });
 }
 
 .navbar--scrolled {
-  background: rgba(17, 24, 39, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   padding: 0.625rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
 }
 
 .navbar__container {
@@ -121,7 +121,7 @@ onUnmounted(() => { window.removeEventListener('scroll', handleScroll); });
   font-size: var(--text-xl);
   font-weight: var(--font-extrabold);
   letter-spacing: -1px;
-  color: var(--color-primary-400);
+  color: var(--color-primary-800);
 }
 
 /* Hamburger button — visible on mobile */
@@ -170,16 +170,16 @@ onUnmounted(() => { window.removeEventListener('scroll', handleScroll); });
   right: -100%;
   height: 100dvh;
   width: min(80vw, 280px);
-  background: rgba(17, 24, 39, 0.98);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 1px solid rgba(15, 23, 42, 0.08);
   flex-direction: column;
   align-items: flex-start;
   padding: 5rem var(--space-5) var(--space-6);
   gap: var(--space-1);
   transition: right var(--transition-slow);
-  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.35);
+  box-shadow: -4px 0 24px rgba(15, 23, 42, 0.12);
   list-style: none;
   margin: 0;
   display: flex;
@@ -204,11 +204,11 @@ onUnmounted(() => { window.removeEventListener('scroll', handleScroll); });
 
 .navbar__link:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(15, 23, 42, 0.04);
 }
 
 .navbar__link.active {
-  color: var(--color-primary-300);
+  color: var(--color-primary-600);
 }
 
 /* Active underline indicator */
@@ -226,8 +226,8 @@ onUnmounted(() => { window.removeEventListener('scroll', handleScroll); });
 .navbar__link.active::after { width: 24px; }
 
 .navbar__lang-btn {
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.12);
   color: var(--text-primary);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-md);

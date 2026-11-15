@@ -1,8 +1,13 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '../composables/useLanguage';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const { t } = useLanguage();
+let gsapCtx;
 
 const staticProjectData = [
   { posts_id: 0, imagen: "/images/skillLedger.png", github: "https://github.com/TalentChain-UPC/Frontend", demo: null },
@@ -19,6 +24,74 @@ const projects = computed(() => {
     ...(staticProjectData[index] || {})
   }));
 });
+
+onMounted(() => {
+  gsapCtx = gsap.context(() => {
+    gsap.from('.proyectos__header', {
+      y: 30,
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: '.proyectos__header',
+        start: 'top 90%',
+        once: true,
+      },
+    });
+
+    const cards = gsap.utils.toArray('.proyecto-card');
+    cards.forEach((card, idx) => {
+      const brushPaths = card.querySelectorAll('.proyecto-card__brush-frame path');
+      brushPaths.forEach((p) => {
+        const len = p.getTotalLength();
+        gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+      });
+
+      const img = card.querySelector('.proyecto-card__image');
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 92%',
+          once: true,
+        },
+        delay: (idx % 2) * 0.12,
+      });
+
+      tl.from(card, {
+        y: 32,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+        immediateRender: false,
+      });
+
+      if (img) {
+        tl.from(img, {
+          scale: 1.06,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          immediateRender: false,
+        }, '-=0.4');
+      }
+
+      if (brushPaths.length) {
+        tl.to(brushPaths, {
+          strokeDashoffset: 0,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: 'power2.inOut',
+        }, '-=0.55');
+      }
+    });
+  });
+});
+
+onUnmounted(() => {
+  if (gsapCtx) gsapCtx.revert();
+});
 </script>
 
 <template>
@@ -32,7 +105,22 @@ const projects = computed(() => {
       <div class="proyectos__grid">
         <div v-for="(proyecto, index) in projects" :key="index" class="proyecto-card">
           <div class="proyecto-card__image-wrapper">
-            <img v-if="proyecto.imagen" :src="proyecto.imagen" :alt="proyecto.nombre" class="proyecto-card__image" />
+            <img v-if="proyecto.imagen" :src="proyecto.imagen" :alt="proyecto.nombre" loading="lazy" decoding="async" class="proyecto-card__image" />
+            <!-- Delineado curvo tipo brocha -->
+            <svg class="proyecto-card__brush-frame" viewBox="0 0 400 200" preserveAspectRatio="none" fill="none" aria-hidden="true">
+              <path
+                d="M 8 28 C 12 10, 28 8, 95 10"
+                stroke="var(--color-primary-600)"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <path
+                d="M 305 190 C 372 192, 388 188, 392 168"
+                stroke="var(--color-primary-600)"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
             <!-- Hover overlay: GitHub + Demo -->
             <div v-if="proyecto.github || proyecto.demo" class="proyecto-card__overlay">
               <a
@@ -122,7 +210,7 @@ const projects = computed(() => {
 .proyecto-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
-  border-color: var(--color-primary-700);
+  border-color: var(--color-primary-500);
 }
 
 .proyecto-card__image-wrapper {
@@ -131,6 +219,15 @@ const projects = computed(() => {
   height: 190px;
   overflow: hidden;
   background: var(--bg-tertiary);
+}
+
+.proyecto-card__brush-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .proyecto-card__image {
@@ -152,7 +249,7 @@ const projects = computed(() => {
   align-items: center;
   justify-content: center;
   gap: var(--space-4);
-  background: rgba(17, 24, 39, 0.6);
+  background: rgba(248, 250, 252, 0.85);
   opacity: 0;
   transition: opacity var(--transition-base);
   backdrop-filter: blur(3px);
@@ -170,19 +267,20 @@ const projects = computed(() => {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: white;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-secondary);
+  color: var(--text-primary);
   font-size: 1.4rem;
   text-decoration: none;
-  transition: background var(--transition-base), transform var(--transition-base);
-  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-md);
+  transition: background var(--transition-base), transform var(--transition-base), color var(--transition-base), border-color var(--transition-base);
 }
 
 .proyecto-card__overlay-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: var(--color-primary-600);
+  border-color: var(--color-primary-600);
   transform: scale(1.1);
-  color: white;
+  color: #ffffff;
 }
 
 .proyecto-card__content {
@@ -216,9 +314,9 @@ const projects = computed(() => {
 
 .tech-tag {
   padding: var(--space-1) var(--space-3);
-  background: rgba(124, 58, 237, 0.08);
-  border: 1px solid rgba(124, 58, 237, 0.25);
-  color: var(--color-primary-300);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-200);
+  color: var(--color-primary-700);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: var(--font-medium);

@@ -1,7 +1,48 @@
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '../composables/useLanguage';
 
+gsap.registerPlugin(ScrollTrigger);
+
 const { t } = useLanguage();
+let gsapCtx;
+
+onMounted(() => {
+  gsapCtx = gsap.context(() => {
+    gsap.from('.skills__header', {
+      y: 28,
+      opacity: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: '.skills__header',
+        start: 'top 90%',
+        once: true,
+      },
+    });
+
+    gsap.from('.skill-item', {
+      y: 22,
+      opacity: 0,
+      duration: 0.5,
+      stagger: 0.06,
+      ease: 'power2.out',
+      immediateRender: false,
+      scrollTrigger: {
+        trigger: '.skills__grid',
+        start: 'top 90%',
+        once: true,
+      },
+    });
+  });
+});
+
+onUnmounted(() => {
+  if (gsapCtx) gsapCtx.revert();
+});
 
 const skills = {
   technical: [
@@ -138,14 +179,15 @@ const skills = {
 }
 
 .skill-pill--soft {
-  background: rgba(124, 58, 237, 0.05);
-  border-color: rgba(124, 58, 237, 0.2);
-  color: var(--color-primary-300);
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-200);
+  color: var(--color-primary-700);
 }
 
 .skill-pill--soft:hover {
+  background: var(--color-primary-100);
   border-color: var(--color-primary-500);
-  color: var(--color-primary-200);
+  color: var(--color-primary-800);
 }
 
 /* ========= TABLET: 640px ========= */

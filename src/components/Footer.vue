@@ -124,7 +124,7 @@ const quickLinks = [
   width: 38px;
   height: 38px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(15, 23, 42, 0.04);
   border: 1px solid var(--border-primary);
   color: var(--text-secondary);
   font-size: var(--text-base);
